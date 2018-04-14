@@ -13,9 +13,47 @@ Coordinate = collections.namedtuple('Coordinate', ('x', 'y'))
 
 
 def search_maze(maze, s, e):
-    # Implement this placeholder.
-    return []
 
+    def search(maze, cur, e):
+        if cur == e:
+            return [cur]
+
+        if cur in visited:
+            return None
+
+        res = None
+        visited.add(cur)
+
+        right = Coordinate(cur.x + 1, cur.y)
+        up = Coordinate(cur.x, cur.y + 1)
+        left = Coordinate(cur.x - 1, cur.y)
+        down = Coordinate(cur.x, cur.y - 1)
+
+        if path_element_is_feasible(maze, cur, up):
+            res = search(maze, up, e)
+            if res is not None:
+                res.insert(0, cur)
+                return res
+        if res is None and path_element_is_feasible(maze, cur, down):
+            res = search(maze, down, e)
+            if res is not None:
+                res.insert(0, cur)
+                return res
+        if res is None and path_element_is_feasible(maze, cur, right):
+            res = search(maze, right, e)
+            if res is not None:
+                res.insert(0, cur)
+                return res
+        if res is None and path_element_is_feasible(maze, cur, left):
+            res = search(maze, left, e)
+            if res is not None:
+                res.insert(0, cur)
+                return res
+
+        return res
+
+    visited = set()
+    return search(maze, s, e)
 
 def path_element_is_feasible(maze, prev, cur):
     if not ((0 <= cur.x < len(maze)) and
