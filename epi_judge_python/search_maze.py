@@ -73,6 +73,7 @@ def search_maze_wrapper(executor, maze, s, e):
 
     path = executor.run(functools.partial(search_maze, cp, s, e))
 
+    print(s, e, path)
     if not path:
         return s == e
 
