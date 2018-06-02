@@ -6,9 +6,26 @@ from test_framework.test_failure import TestFailure
 from test_framework.test_utils import enable_executor_hook
 
 
+"""
+ "" a b a r
+ ""
+ a  T
+ b    F   T
+ a      T F
+ r        F
+"""
+
+
 def decompose_into_dictionary_words(domain, dictionary):
-    # Implement this placeholder.
-    return []
+    T = [[True] * (len(domain) + 1) for _ in range(len(domain) + 1)]
+
+    for r in range(1, len(domain) + 1):
+        for c in range(r, len(domain) + 1):
+            word = domain[r-1:c]
+            T[r][c] = word in dictionary and (any(T[i][r - 1] for i in range(1, r)) if r > 1 else True)
+
+    print(any([T[i][len(domain)] for i in range(1, len(domain) + 1)]))
+    return [any([T[i][len(domain)] for i in range(1, len(domain) + 1)])]
 
 
 @enable_executor_hook
