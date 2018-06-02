@@ -1,15 +1,18 @@
 def majority_search(stream):
-    letters = {}
-    max_letter_count = float('-inf')
-    max_letter = None
 
-    for letter in stream:
-        letters[letter] = (letters.get(letter) or 0) + 1
+    candidate = None
+    candidate_count = 0
+    for char in stream:
+        if char == candidate:
+            candidate_count += 1
+        else:
+            if candidate_count == 0:
+                candidate = char
+                candidate_count = 1
+            else:
+                candidate_count -= 1
 
-        if max_letter_count < letters[letter]:
-            max_letter_count = letters[letter]
-            max_letter = letter
-    return max_letter
+    return candidate
 
 
 def majority_search_wrapper(stream):
